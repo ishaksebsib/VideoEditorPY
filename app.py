@@ -1,6 +1,6 @@
 import os
 import random
-from moviepy.editor import VideoFileClip, concatenate_videoclips
+from moviepy.editor import VideoFileClip, AudioFileClip, concatenate_videoclips ,CompositeAudioClip
 
 
 # PICK RANDOM NUMBER FROM LENGTH OF VIDEO FILE THERE ARE IN VIDEOS FOLDER 
@@ -42,7 +42,21 @@ print(f'mixing videos, IDs:{videoIDs}')
 final_clip = concatenate_videoclips(readyToMIX)
 
 
+# Adding the background music 
+
+mixed_audio = final_clip.audio # background audio of our mixed videos
+
+bg_music = AudioFileClip("./audios/1.mp3") # background music that we want to add
+
+bg_music = CompositeAudioClip([bg_music] * (int(mixed_audio.duration / bg_music.duration) + 1)) # ajusting the background music to fit our mix video length
+
+bg_music = bg_music.set_duration(mixed_audio.duration) 
+
+final_audio = CompositeAudioClip([mixed_audio, bg_music]) # mixing the audios (mixed video background + the new backgound music)
+
+final_clip = final_clip.set_audio(final_audio) # finaliy seting the audio 
+
 # Save(Export) the Video
 
-final_clip.write_videofile("./output/final.mp4")
+final_clip.write_videofile("./output/finjkjal.mp4")
 

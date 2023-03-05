@@ -8,6 +8,7 @@ __pycache__/
 
 # Distribution / packaging
 *.mp4
+*.mp3
 .Python
 build/
 develop-eggs/
